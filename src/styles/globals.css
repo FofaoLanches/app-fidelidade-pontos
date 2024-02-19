@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+body {
+  background-color: theme("colors.fundo.50");
+}
+
+.style-text-error {
+  @apply text-xs;
+  @apply text-red-500;
+  @apply font-normal;
+  @apply h-6;
+  @apply pb-2;
+}
+.style-focus-error {
+  @apply ring-2;
+  @apply ring-red-500;
+  @apply ring-inset;
+}
+
+.animate-line {
+  position: relative;
+  animation-name: animateline;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+}
+
+@keyframes animateline {
+  0% {
+    left: 0px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300;
+  @apply rounded-[3.125rem];
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+  @apply opacity-[0.2];
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  @apply w-[0.875rem];
+  @apply opacity-[0.2];
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
