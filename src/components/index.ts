@@ -1,3 +1,4 @@
+export * from "./BasicAuth";
 export * from "./Button";
 export * from "./Checkbox";
 export * from "./Container";

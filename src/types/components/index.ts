@@ -1,3 +1,4 @@
+export * from "./basicAuth.interface";
 export * from "./button.interface";
 export * from "./container.interface";
 export * from "./filefield.interface";
