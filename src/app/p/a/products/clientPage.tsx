@@ -114,7 +114,6 @@ export const ClientPage: React.FC<ProductsClientPageInterface> = (props) => {
                       placeholder="blur"
                       className="absolute transition-all object-cover top-0 group-hover:top-[-90%] rounded-xl w-full h-full"
                       alt={`Imagem de produto ${display_name}+${id}`}
-                      loading="lazy"
                       width={500}
                       height={500}
                       quality={100}

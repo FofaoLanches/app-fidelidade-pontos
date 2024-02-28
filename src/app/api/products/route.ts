@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { getEndpointBaseUrlAPIS } from "@/helpers";
-import { ErrorResponseEndpointInterface } from "@/types";
+import { ErrorResponseEndpointInterface, ReqProductWithUploadFieldInterface } from "@/types";
 
 export async function GET() {
   const token = headers().get("authorization");
@@ -27,17 +27,33 @@ export async function POST(request: Request) {
   const data = await request.formData();
   const token = headers().get("authorization");
 
-  const req = await fetch(`${getEndpointBaseUrlAPIS()}/admin/products`, {
+  const parsedData = Object.fromEntries(data);
+  // eslint-disable-next-line no-unused-vars
+  const { image, ...rest } = parsedData;
+  const auxImage = image as File;
+
+  const reqProduct = await fetch(`${getEndpointBaseUrlAPIS()}/admin/products`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
     },
-    body: data,
+    body: JSON.stringify({ ...rest, ...(image && { file_type: auxImage.type }) }),
   });
 
-  const res: ErrorResponseEndpointInterface = await req.json();
+  const resProduct: ReqProductWithUploadFieldInterface = await reqProduct.json();
 
-  if (res.success === false) {
+  if (resProduct.data.image_upload_url) {
+    await fetch(`${resProduct.data.image_upload_url}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": auxImage.type,
+      },
+      body: image,
+    });
+  }
+
+  if (resProduct.success === false) {
     throw new Error("Error");
   }
 
@@ -47,20 +63,35 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   const data = await request.formData();
   const token = headers().get("authorization");
-
   const requestId = data.get("id");
 
-  const req = await fetch(`${getEndpointBaseUrlAPIS()}/admin/products/${requestId}`, {
+  const parsedData = Object.fromEntries(data);
+  // eslint-disable-next-line no-unused-vars
+  const { image, ...rest } = parsedData;
+  const auxImage = image as File;
+
+  const reqProduct = await fetch(`${getEndpointBaseUrlAPIS()}/admin/products/${requestId}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
     },
-    body: data,
+    body: JSON.stringify({ ...rest, ...(image && { file_type: auxImage.type }) }),
   });
 
-  const res: ErrorResponseEndpointInterface = await req.json();
+  const resProduct: ReqProductWithUploadFieldInterface = await reqProduct.json();
 
-  if (res.success === false) {
+  if (resProduct.data.image_upload_url) {
+    await fetch(`${resProduct.data.image_upload_url}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": auxImage.type,
+      },
+      body: image,
+    });
+  }
+
+  if (resProduct.success === false) {
     throw new Error("Error");
   }
 
