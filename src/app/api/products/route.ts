@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
+import { contentTypeImage } from "@/constants";
 import { getEndpointBaseUrlAPIS } from "@/helpers";
 import { ErrorResponseEndpointInterface, ReqProductWithUploadFieldInterface } from "@/types";
 
@@ -69,29 +70,42 @@ export async function PUT(request: Request) {
   // eslint-disable-next-line no-unused-vars
   const { image, ...rest } = parsedData;
   const auxImage = image as File;
+  const validPathUploadImageUrl = contentTypeImage.includes(auxImage.type);
+  let res = {} as ReqProductWithUploadFieldInterface;
 
-  const reqProduct = await fetch(`${getEndpointBaseUrlAPIS()}/admin/products/${requestId}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({ ...rest, ...(image && { file_type: auxImage.type }) }),
-  });
+  if (validPathUploadImageUrl && image) {
+    const req = await fetch(`${getEndpointBaseUrlAPIS()}/admin/products/${requestId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ ...rest, file_type: auxImage.type }),
+    });
 
-  const resProduct: ReqProductWithUploadFieldInterface = await reqProduct.json();
+    res = await req.json();
 
-  if (resProduct.data.image_upload_url) {
-    await fetch(`${resProduct.data.image_upload_url}`, {
+    await fetch(`${res.data.image_upload_url}`, {
       method: "PUT",
       headers: {
         "Content-type": auxImage.type,
       },
       body: image,
     });
+  } else {
+    const req = await fetch(`${getEndpointBaseUrlAPIS()}/admin/products/${requestId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ ...rest }),
+    });
+
+    res = await req.json();
   }
 
-  if (resProduct.success === false) {
+  if (res.success === false) {
     throw new Error("Error");
   }
 
