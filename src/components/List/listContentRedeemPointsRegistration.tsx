@@ -6,7 +6,6 @@ import { ListContentRedeemPointsRegistrationInterface } from "@/types";
 
 export const ListContentRedeemPointsRegistration: React.FC<ListContentRedeemPointsRegistrationInterface> = (props) => {
   const {
-    id,
     customer: {
       user: { full_name },
       phone_number,
