@@ -47,9 +47,9 @@ export const BasicAuth = ({ clientBaseUrl, children }: BasicAuthInterface) => {
     handleBasicAuth();
   }, [handleBasicAuth]);
 
-  if (authenticated) {
-    return <Fragment>{children}</Fragment>;
+  if (!authenticated && process.env.NODE_ENV === "production") {
+    return <Fragment />;
   }
 
-  return <Fragment />;
+  return <Fragment>{children}</Fragment>;
 };
