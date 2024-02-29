@@ -8,6 +8,12 @@ const nextConfig = {
         port: "",
         pathname: "/products/**",
       },
+      {
+        protocol: "https",
+        hostname: "fofao-lanches-test-bucket.cdf5b6507fa4af4344fbab896825f3c6.r2.cloudflarestorage.com",
+        port: "",
+        pathname: "/products/**",
+      },
     ],
   },
 };
