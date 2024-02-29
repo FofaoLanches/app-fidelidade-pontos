@@ -3,7 +3,6 @@ import { isEmpty } from "lodash";
 import { useSession } from "next-auth/react";
 import React, { useCallback, useEffect, useState } from "react";
 
-import { getEndpointBaseUrlAPIS } from "@/helpers";
 import { EditProductIdPageInterface, GetProductsInterface } from "@/types";
 
 import { ClientPage } from "./clientPage";
@@ -15,7 +14,7 @@ export default function Page(props: EditProductIdPageInterface) {
 
   const teste = useCallback(async () => {
     if (session.data?.user.token) {
-      const req = await fetch(`${getEndpointBaseUrlAPIS()}/products/${searchParams.productId}`, {
+      const req = await fetch(`https://api-fidelidade-pontos.vercel.app/api/products/${searchParams.productId}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${session.data?.user.token}`,
