@@ -32,7 +32,7 @@ export const BasicAuth = ({ clientBaseUrl, children }: BasicAuthInterface) => {
         return Promise.resolve();
       }
 
-      const typedPassword = window.prompt("Digite a senha: ") ?? "";
+      const typedPassword = window.prompt("Estamos em manutenção, digite a senha: ") ?? "";
 
       if (typedPassword !== correctPassword) {
         window.location.href = "/";
