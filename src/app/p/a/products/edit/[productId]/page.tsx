@@ -1,36 +1,30 @@
-"use client";
-import { isEmpty } from "lodash";
-import { useSession } from "next-auth/react";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 
+import { LoadingPage } from "@/components";
+import { getEndpointBaseUrlClient } from "@/helpers";
+import { useServerSession } from "@/hooks";
 import { EditProductIdPageInterface, GetProductsInterface } from "@/types";
 
 import { ClientPage } from "./clientPage";
 
-export default function Page(props: EditProductIdPageInterface) {
-  const { searchParams } = props;
-  const [product, setProduct] = useState({} as GetProductsInterface);
-  const session = useSession();
+export default async function Page(props: EditProductIdPageInterface) {
+  const {
+    searchParams: { productId },
+  } = props;
+  const session = await useServerSession();
 
-  const teste = useCallback(async () => {
-    if (session.data?.user.token) {
-      const req = await fetch(`https://api-fidelidade-pontos.vercel.app/api/products/${searchParams.productId}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${session.data?.user.token}`,
-        },
-      });
+  if (session.user?.token && productId) {
+    const req = await fetch(`${getEndpointBaseUrlClient()}/products/${productId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${session.user?.token}`,
+      },
+    });
 
-      const res: GetProductsInterface = await req.json();
-      setProduct(res);
-    }
-  }, [session]);
+    const res: GetProductsInterface = await req.json();
 
-  useEffect(() => {
-    teste();
-  }, []);
+    return <ClientPage product={res} token={session.user?.token} />;
+  }
 
-  if (isEmpty(product)) return <></>;
-
-  return <ClientPage product={product} token={session.data?.user.token} />;
+  return <LoadingPage />;
 }
