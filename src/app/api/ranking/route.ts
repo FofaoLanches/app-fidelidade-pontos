@@ -12,9 +12,6 @@ export async function GET(request: Request) {
     headers: {
       "api-key": process.env.API_KEY,
     },
-    next: {
-      revalidate: 3600,
-    },
   });
 
   const res: ErrorResponseEndpointInterface = await req.json();
