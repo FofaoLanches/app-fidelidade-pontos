@@ -1,30 +1,38 @@
-import React from "react";
+"use client";
+import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { LoadingPage } from "@/components";
-import { getEndpointBaseUrlClient } from "@/helpers";
-import { useServerSession } from "@/hooks";
-import { EditProductIdPageInterface, GetProductsInterface } from "@/types";
+import { GetProductsInterface } from "@/types";
 
 import { ClientPage } from "./clientPage";
 
-export default async function Page(props: EditProductIdPageInterface) {
-  const {
-    searchParams: { productId },
-  } = props;
-  const session = await useServerSession();
+export default function Page() {
+  const searchParams = useSearchParams();
+  const productId = searchParams.get("productId");
+  const session = useSession();
+  const [product, setProduct] = useState<GetProductsInterface>();
 
-  if (session.user?.token && productId) {
-    const req = await fetch(`${getEndpointBaseUrlClient()}/products/${productId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${session.user?.token}`,
-      },
-    });
+  const getProduct = useCallback(async () => {
+    if (session.data?.user.token && productId) {
+      const req = await fetch(`/api/product?productId=${productId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `${session.data?.user.token}`,
+        },
+      });
 
-    const res: GetProductsInterface = await req.json();
+      const res: GetProductsInterface = await req.json();
+      setProduct(res);
+    }
+  }, [productId, session.data?.user.token]);
 
-    return <ClientPage product={res} token={session.user?.token} />;
-  }
+  useEffect(() => {
+    getProduct();
+  }, [getProduct]);
 
-  return <LoadingPage />;
+  if (!product && !session.data?.user.token) return <LoadingPage />;
+
+  return <ClientPage product={product} token={session.data?.user.token} />;
 }

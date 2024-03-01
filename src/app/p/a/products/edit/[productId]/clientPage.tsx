@@ -53,25 +53,27 @@ export const ClientPage: React.FC<EditProductIdClientPageInterface> = (props) =>
     });
 
   const getCurrentProduct = useCallback(async () => {
-    const productObjectMetadata = Object.entries(product);
+    if (product) {
+      const productObjectMetadata = Object.entries(product);
 
-    await Promise.all(
-      productObjectMetadata.map(async (item) => {
-        const currentValue = values[item[0] as keyof EditProductsInitialValuesInterface];
-        const fieldName = item[0];
-        const fieldValue = item[1];
+      await Promise.all(
+        productObjectMetadata.map(async (item) => {
+          const currentValue = values[item[0] as keyof EditProductsInitialValuesInterface];
+          const fieldName = item[0];
+          const fieldValue = item[1];
 
-        if (fieldName !== "image_url") {
-          if (isEmpty(currentValue)) {
-            setFieldValue(fieldName, fieldValue);
+          if (fieldName !== "image_url") {
+            if (isEmpty(currentValue)) {
+              setFieldValue(fieldName, fieldValue);
+            }
+          } else {
+            const imageFile = await createImageFileFromUrl(fieldValue);
+
+            setFieldValue("image", imageFile);
           }
-        } else {
-          const imageFile = await createImageFileFromUrl(fieldValue);
-
-          setFieldValue("image", imageFile);
-        }
-      }),
-    );
+        }),
+      );
+    }
 
     setIsLoadingPage(false);
   }, [product, setFieldValue, values]);
@@ -79,7 +81,7 @@ export const ClientPage: React.FC<EditProductIdClientPageInterface> = (props) =>
   useEffect(() => {
     getCurrentProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [product]);
 
   const handleChangeImage = (e: any) => {
     const target = e.target as HTMLInputElement & {
@@ -89,7 +91,7 @@ export const ClientPage: React.FC<EditProductIdClientPageInterface> = (props) =>
     setFieldValue("image", target.files[0]);
   };
 
-  if (isLoadingPage) {
+  if (isLoadingPage || product === undefined) {
     return (
       <div className="flex w-full items-center justify-center h-screen">
         <AiOutlineLoading3Quarters size="50" className="animate-spin" />

@@ -10,5 +10,5 @@ export interface EditProductIdPageInterface {
 }
 
 export interface EditProductIdClientPageInterface extends TokenProp {
-  product: GetProductsInterface;
+  product: GetProductsInterface | undefined;
 }
