@@ -13,7 +13,7 @@ export async function GET(request: Request) {
       "api-key": process.env.API_KEY,
     },
     next: {
-      revalidate: 3600,
+      revalidate: 60000,
     },
   });
 
