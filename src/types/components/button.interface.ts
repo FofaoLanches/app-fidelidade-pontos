@@ -12,6 +12,7 @@ export interface GenericButtonInterface extends CutButtonProps {
 export interface LinkVariantInterface extends GenericButtonInterface {
   href?: string;
   blank?: boolean;
+  forceServerNavigation?: boolean;
 }
 
 export interface ButtonInterface extends LinkVariantInterface {

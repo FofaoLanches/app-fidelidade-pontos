@@ -170,7 +170,12 @@ export const ClientPage = () => {
               </Button>
             </div>
 
-            <Button variant="link" href="/" className="bg-transparent justify-center rounded-none shadow-none text-fontsColor-600">
+            <Button
+              forceServerNavigation
+              variant="link"
+              href="/"
+              className="bg-transparent justify-center rounded-none shadow-none text-fontsColor-600"
+            >
               Quero cadastrar meus pontos
             </Button>
           </div>
