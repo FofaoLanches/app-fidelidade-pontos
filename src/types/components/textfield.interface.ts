@@ -1,5 +1,7 @@
 import { InputHTMLAttributes, ReactNode } from "react";
 
+import { SomeChildInterface } from "..";
+
 type PicHTMLInputElement = Pick<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "onBlur" | "maxLength">;
 type PicHTMLCheckboxElement = Pick<InputHTMLAttributes<HTMLInputElement>, "checked" | "onChange">;
 type PicHTMLFileInputElement = Pick<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "onBlur">;
@@ -22,4 +24,4 @@ export interface TextFieldInterface extends DefaultCustomFieldInterface, PicHTML
 export interface PasswordFieldInterface extends DefaultCustomFieldInterface, PicHTMLInputElement {}
 export interface FileFieldInterface extends DefaultCustomFieldInterface, PicHTMLFileInputElement {}
 export interface TextFieldAreaInterface extends DefaultCustomFieldInterface, PicHTMLTextAreaElement {}
-export interface CheckboxInterface extends PreProps, PicHTMLCheckboxElement {}
+export interface CheckboxInterface extends PreProps, PicHTMLCheckboxElement, SomeChildInterface {}
