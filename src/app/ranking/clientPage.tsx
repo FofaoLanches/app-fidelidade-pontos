@@ -50,8 +50,8 @@ export const ClientPage: React.FC<RankingInterface> = (props) => {
         const res: GetRankingInterface[] = await getRanking({ period: value.paramType });
         setClientUserData(res);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error(error);
     } finally {
       handleFilterMenu();
       setIsLoading(false);
