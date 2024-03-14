@@ -2,6 +2,7 @@
 
 import { useFormik } from "formik";
 import { isEmpty } from "lodash";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
 import toast from "react-hot-toast";
@@ -57,6 +58,8 @@ export const ClientPage = () => {
     });
 
   const handleRegister = async (code: string) => {
+    if (!values.terms[0]) return;
+
     setVerificationLoading(true);
     if (code) {
       setFieldValue("verification_code", code);
@@ -157,12 +160,16 @@ export const ClientPage = () => {
             checked={values.terms[0]}
             isInvalid={!!errors.terms && touched.terms}
             onChange={() => setFieldValue("terms", [!values.terms[0]])}
-            label="Estou ciente dos termos de uso e política de privacidade"
-          />
+            label="Estou ciente dos"
+          >
+            <Link className="text-blue-500 ml-1" href="/terms" target="_blank">
+              termos de uso e política de privacidade
+            </Link>
+          </Checkbox>
 
           <div className="flex flex-col gap-4 divide-y-2 divide-ternary-400">
             <div className="flex flex-col gap-4">
-              <Button variant="button" className="bg-ternary-800 text-fontsColor-200" isLoading={isSubmitting}>
+              <Button disabled={!values.terms[0]} variant="button" className="bg-ternary-800 text-fontsColor-200" isLoading={isSubmitting}>
                 Criar conta
               </Button>
               <Button className="bg-gray-500 text-fontsColor-200" variant="link" href="/login">
@@ -170,7 +177,12 @@ export const ClientPage = () => {
               </Button>
             </div>
 
-            <Button variant="link" href="/" className="bg-transparent justify-center rounded-none shadow-none text-fontsColor-600">
+            <Button
+              forceServerNavigation
+              variant="link"
+              href="/"
+              className="bg-transparent justify-center rounded-none shadow-none text-fontsColor-600"
+            >
               Quero cadastrar meus pontos
             </Button>
           </div>
