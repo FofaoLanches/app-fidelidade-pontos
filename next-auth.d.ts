@@ -10,6 +10,7 @@ declare module "next-auth" {
       role: AdminOrCustomerRoleType;
       token: string;
       city?: string;
+      whatsapp_session_active?: boolean;
     };
   }
 }
