@@ -4,9 +4,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
-import { BasicAuth, Screen } from "@/components";
+import { Screen } from "@/components";
+import { QrCodeProvider } from "@/context/qrcode-context";
 import SessionAuthenticateProvider from "@/context/sessionProvider";
-import { getEndpointBaseUrlClient } from "@/helpers";
 import { NextLayoutComponentInterface } from "@/types";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,18 +17,15 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children, session }: NextLayoutComponentInterface) {
-  const clientBaseUrl = getEndpointBaseUrlClient();
-
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        {/*TODO: Remove BasicAuth after production*/}
-        <BasicAuth clientBaseUrl={clientBaseUrl}>
-          <Toaster position="top-right" reverseOrder={false} />
-          <SessionAuthenticateProvider session={session}>
+        <Toaster position="top-right" reverseOrder={false} />
+        <SessionAuthenticateProvider session={session}>
+          <QrCodeProvider>
             <Screen>{children}</Screen>
-          </SessionAuthenticateProvider>
-        </BasicAuth>
+          </QrCodeProvider>
+        </SessionAuthenticateProvider>
       </body>
     </html>
   );

@@ -5,6 +5,7 @@ export interface UserInterface {
   full_name: string;
   email: string;
   role: AdminOrCustomerRoleType;
+  whatsapp_session_active?: boolean;
   token: string;
 }
 

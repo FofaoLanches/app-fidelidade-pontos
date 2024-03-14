@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
         const res: ResponseLoginInterface = await req.json();
 
         if (res.token) {
-          const user = { ...res.user, token: res.token };
+          const user = { ...res.user, token: res.token, whatsapp_session_active: res.whatsapp_session_active };
           return user;
         }
 
@@ -72,6 +72,7 @@ export const authOptions: NextAuthOptions = {
           id: token.id,
           role: token.role,
           token: token.token,
+          whatsapp_session_active: token.whatsapp_session_active,
           city: !!aux.Admin ? aux.Admin.city : "",
         },
       };

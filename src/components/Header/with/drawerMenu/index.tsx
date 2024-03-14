@@ -3,12 +3,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { AiFillCloseSquare } from "react-icons/ai";
+import { FaWhatsapp } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "@/components";
 import { adminDrawerItems, cusotmerDrawerItems } from "@/constants";
+import { QrCodeContext } from "@/context";
 import { getDevice } from "@/helpers";
 import { DrawerItemListType, DrawerMenuInterface } from "@/types";
 
@@ -19,6 +21,8 @@ export const DrawerMenu: React.FC<DrawerMenuInterface> = (props) => {
   const { handleTrigger = () => null, isOpen = false, adminCity } = props;
   const { push } = useRouter();
   const { data } = useSession();
+
+  const { setIsOpenModalQrCode } = useContext(QrCodeContext);
 
   const isMobile = getDevice();
 
@@ -88,9 +92,21 @@ export const DrawerMenu: React.FC<DrawerMenuInterface> = (props) => {
             {chooseHeaderItems().map((item) => {
               const { id = "" } = item;
               return (
-                <ItemDrawer forceHardNavigation={item.forceHardNavigation} key={id} href={id} handleCloseDrawer={handleTrigger} {...item} />
+                <ItemDrawer {...item} forceHardNavigation={item.forceHardNavigation} key={id} href={id} handleCloseDrawer={handleTrigger} />
               );
             })}
+            {data?.user.role === "ADMIN" && (
+              <span
+                onClick={() => {
+                  handleTrigger();
+                  setIsOpenModalQrCode(true);
+                }}
+                className="flex items-center gap-4 py-2 px-8 cursor-pointer active:bg-fundo-200"
+              >
+                <FaWhatsapp className="w-8 h-8" />
+                <span className="text-lg font-semibold text-fontsColor-800">WhatsApp QrCode</span>
+              </span>
+            )}
           </div>
           <Button
             variant="button"

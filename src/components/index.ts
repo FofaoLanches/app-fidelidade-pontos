@@ -1,4 +1,3 @@
-export * from "./BasicAuth";
 export * from "./Button";
 export * from "./Checkbox";
 export * from "./Container";
@@ -13,6 +12,7 @@ export * from "./List";
 export * from "./LoadingPage";
 export * from "./NotFound";
 export * from "./Passfield";
+export * from "./QrCodeModal";
 export * from "./Screen";
 export * from "./Textfield";
 export * from "./TextfieldArea";
