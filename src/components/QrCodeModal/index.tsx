@@ -32,10 +32,6 @@ export const QrCodeModal: React.FC<QrCodeModalInterface> = (props) => {
     try {
       const res = await getQrCode({ token: session.token });
 
-      if (res.whatsapp_session_active) {
-        toast.success("Você já está autenticado!");
-      }
-
       if (res.qr_code) {
         setQrCode(res.qr_code);
       }
