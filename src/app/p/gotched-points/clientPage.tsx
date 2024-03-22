@@ -95,7 +95,7 @@ export const ClientPage: React.FC<GotchedPointClientPageInterface> = (props) => 
                         height={200}
                         quality={100}
                       />
-                      <div className="flex flex-col justify-between py-3">
+                      <div className="flex flex-col justify-between pb-3 pt-6">
                         {display_name}
 
                         <div className="flex justify-between text-fontsColor-700 font-medium text-sm pt-1">
