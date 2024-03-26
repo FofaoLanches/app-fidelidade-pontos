@@ -30,9 +30,9 @@ export const RegisterSchema = Yup.object().shape({
   full_name: Yup.string().min(3, "Nome inválido").required("Nome obrigatório").test(validateFullName),
   email: Yup.string().email("Email inválido").required("Campo obrigatório"),
   phone_number: Yup.string().required("Campo obrigatório").test({ test: validatePhoneNumber }),
-  password: Yup.string().min(8, "Senha muito curta").max(20, "Senha muito longa").required("Senha obrigatória"),
+  password: Yup.string().min(6, "Senha muito curta").max(20, "Senha muito longa").required("Senha obrigatória"),
   confirm_password: Yup.string()
-    .min(8, "Senha muito curta")
+    .min(6, "Senha muito curta")
     .max(20, "Senha muito longa")
     .required("Senha obrigatória")
     .oneOf([Yup.ref("password")], "As senhas não conferem"),
