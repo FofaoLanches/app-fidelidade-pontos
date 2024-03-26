@@ -1,7 +1,6 @@
 "use client";
 import { useFormik } from "formik";
 import { isEmpty, truncate } from "lodash";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
@@ -85,15 +84,10 @@ export const ClientPage: React.FC<GotchedPointClientPageInterface> = (props) => 
                       <span className="pl-2">{amount_points} pts</span>
                     </div>
                     <div className="flex gap-4">
-                      <Image
+                      <img
                         alt={`Imagem do produto ${display_name}`}
                         src={image_url || "/empty_product.png"}
-                        blurDataURL={image_url || "/empty_product.png"}
-                        placeholder="blur"
                         className="border-r-[1px] border-solid border-fundo-300 w-[122px] min-h-[104px] object-cover"
-                        width={200}
-                        height={200}
-                        quality={100}
                       />
                       <div className="flex flex-col justify-between pb-3 pt-6">
                         {display_name}

@@ -1,5 +1,4 @@
 import { isString } from "lodash";
-import Image from "next/image";
 
 import { FilefieldInterface } from "@/types";
 
@@ -10,21 +9,15 @@ export const SelectedImage: React.FC<FilefieldInterface> = (props) => {
   if (isString(src)) {
     return (
       <div className="flex flex-col items-center w-full h-[20vh] rounded-lg shadow-xl bg-white cursor-pointer">
-        <Image
+        <img
           alt={alt}
           src={src}
-          blurDataURL={src}
-          placeholder="blur"
           className="object-none rounded-lg"
-          width={0}
-          height={0}
-          sizes="100vw"
           style={{
             width: "100%",
             height: "20vh",
             objectFit: "cover",
           }}
-          quality={100}
         />
       </div>
     );

@@ -1,7 +1,6 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
 import { isEmpty } from "lodash";
-import Image from "next/image";
 import { Fragment, useCallback, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoIosWarning } from "react-icons/io";
@@ -103,14 +102,7 @@ export const QrCodeModal: React.FC<QrCodeModalInterface> = (props) => {
                   Use o WhatsApp para comunicar seu clientes!
                 </Dialog.Title>
                 <div className="flex w-full justify-between items-center gap-8">
-                  <Image
-                    src="/wpp_steps.jpeg"
-                    alt="passo a passo de como conectar o WhatsApp"
-                    className="w-[auto] h-[180px]"
-                    width={700}
-                    height={700}
-                    quality={100}
-                  />
+                  <img src="/wpp_steps.jpeg" alt="passo a passo de como conectar o WhatsApp" className="w-[auto] h-[180px]" />
                   <QrCode qrCode={qrCode} isLoading={isLoading} />
                 </div>
                 <div className="flex justify-between gap-4 mt-4">

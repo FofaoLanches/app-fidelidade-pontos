@@ -1,6 +1,5 @@
 "use client";
 import { isEmpty } from "lodash";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -108,15 +107,10 @@ export const ClientPage: React.FC<ProductsClientPageInterface> = (props) => {
               return (
                 <div key={`${id}-${display_name}`} className="relative overflow-hidden group h-48 rounded-xl bg-white shadow-md">
                   <div className="block w-full h-full">
-                    <Image
+                    <img
                       src={image_url || "/empty_product.png"}
-                      blurDataURL={image_url || "/empty_product.png"}
-                      placeholder="blur"
                       className="absolute transition-all object-cover top-0 group-hover:top-[-90%] rounded-xl w-full h-full"
                       alt={`Imagem de produto ${display_name}+${id}`}
-                      width={500}
-                      height={500}
-                      quality={100}
                     />
                     <div className="flex flex-col items-start justify-end p-6 gap-4 w-full h-full">
                       <span className="text-fontsColor-900 font-medium text-md">
