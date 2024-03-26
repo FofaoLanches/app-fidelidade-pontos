@@ -27,7 +27,7 @@ export const With: React.FC<WithInterface> = (props) => {
 
   return (
     <Fragment>
-      <div className={twMerge("fixed top-0 left-0 w-screen h-[70px] shadow-2xl", className)}>
+      <div className={twMerge("fixed top-0 left-0 w-screen h-[70px] shadow-2xl z-10", className)}>
         <button className="absolute top-[3vh] left-[2vw]" onClick={handleTriggerModal}>
           <HiMenuAlt2 className="w-10 h-8 text-fontsColor-300" />
         </button>
