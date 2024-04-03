@@ -31,25 +31,31 @@ export const ClientPage: React.FC<RegisterPointsInterface> = (props) => {
       phone_number: values.phone_number.replace(/\D/g, ""),
     };
 
-    const promise = onRegistrationPoint(formattedValues);
+    const res = await onRegistrationPoint(formattedValues);
 
-    await toast.promise(
-      promise,
-      {
-        loading: "Processando...",
-        error: "Erro ao solicitar pontos!",
-        success: `Solicitação com valor R$ ${values.value_spent} enviado pelo número ${values.phone_number}`,
-      },
-      {
+    if (isEmpty(res)) {
+      return toast.error("Erro ao solicitar pontos!", {
         style: {
           minWidth: "250px",
         },
-        success: {
-          duration: 5000,
-          icon: <BsFillCheckCircleFill className="text-ternary-800 w-10 h-10" />,
+      });
+    }
+
+    if (!res.success) {
+      return toast.error(`${res.message}`, {
+        style: {
+          minWidth: "250px",
         },
+      });
+    }
+
+    toast.success(`Solicitação com valor R$ ${values.value_spent} enviado pelo número ${values.phone_number}`, {
+      duration: 5000,
+      icon: <BsFillCheckCircleFill className="text-ternary-800 w-10 h-10" />,
+      style: {
+        minWidth: "250px",
       },
-    );
+    });
 
     if (hasSession) {
       navigate.push("/p/dashboard");

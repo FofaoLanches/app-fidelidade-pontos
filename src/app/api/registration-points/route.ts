@@ -40,11 +40,11 @@ export async function POST(request: Request) {
 
   const res: ErrorResponseEndpointInterface = await req.json();
 
-  if (res.success === false) {
-    throw new Error("Error");
+  if (req.status === 500) {
+    throw new Error("Error allan");
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json(res);
 }
 
 export async function PUT(request: Request) {
