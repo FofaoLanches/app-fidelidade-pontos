@@ -41,7 +41,7 @@ export const ClientPage: React.FC<RegisterPointsInterface> = (props) => {
       });
     }
 
-    if (!res.success) {
+    if (res.success === false) {
       return toast.error(`${res.message}`, {
         style: {
           minWidth: "250px",
