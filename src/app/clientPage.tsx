@@ -49,7 +49,7 @@ export const ClientPage: React.FC<RegisterPointsInterface> = (props) => {
       });
     }
 
-    toast.success(`Solicitação com valor R$ ${values.value_spent} enviado pelo número ${values.phone_number}`, {
+    toast.success(`Solicitação de valor R$ ${values.value_spent} enviado pelo número ${values.phone_number}`, {
       duration: 5000,
       icon: <BsFillCheckCircleFill className="text-ternary-800 w-10 h-10" />,
       style: {
