@@ -4,6 +4,8 @@ import { GetCustomerInterface } from "@/types";
 
 import { ClientPage } from "./clientPage";
 
+// coments
+
 export default async function Page() {
   const session = await useServerSession();
 
