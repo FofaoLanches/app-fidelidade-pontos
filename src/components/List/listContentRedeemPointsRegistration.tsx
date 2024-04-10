@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash";
+import { isEmpty, uniqueId } from "lodash";
 import { Fragment } from "react";
 
 import { formatPhone } from "@/helpers";
@@ -13,15 +13,17 @@ export const ListContentRedeemPointsRegistration: React.FC<ListContentRedeemPoin
     quantity_of_products,
     products,
     redeem_mode,
-    redeem_time = "13:00",
+    redeem_time,
   } = props;
   const productsLength = products.length;
 
   return (
     <div className="flex flex-col w-full">
-      <b className="mb-4">
-        {redeem_mode === "DINE_IN" ? "Comer no local" : "Retirada"} às {redeem_time} hrs
-      </b>
+      {!isEmpty(redeem_mode) && !isEmpty(redeem_time) && (
+        <b className="mb-4">
+          {redeem_mode === "DINE_IN" ? "Comer no local" : "Retirada"} às {redeem_time} hrs
+        </b>
+      )}
       <p>Cliente: {full_name}</p>
       <p>Pedido com telefone: {formatPhone(phone_number)}</p>
 
