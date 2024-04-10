@@ -56,7 +56,7 @@ export const RedeemProductsModal: React.FC<RedeemProductsModalInterface> = (prop
                 <div className="flex flex-col">
                   <div>
                     <label htmlFor="redeem_mode" className="text-md block font-normal mb-1">
-                      Como será a entrega:
+                      Como será o resgate:
                     </label>
                     <select
                       disabled={isSubmitting}
