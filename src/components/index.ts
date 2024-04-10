@@ -12,7 +12,7 @@ export * from "./List";
 export * from "./LoadingPage";
 export * from "./NotFound";
 export * from "./Passfield";
-export * from "./QrCodeModal";
+export * from "./RedeemProductsModal";
 export * from "./Screen";
 export * from "./Textfield";
 export * from "./TextfieldArea";

@@ -1,4 +1,4 @@
-import { PendindgOrApproveStatusType } from "@/types";
+import { InitialValuesListProductsInterface, PendindgOrApproveStatusType } from "@/types";
 
 interface Product {
   id: string;
@@ -14,7 +14,8 @@ interface Customer {
   user: User;
 }
 
-export interface GetRedeemPointsInterface {
+type CutInitialValuesListProductsInterface = Pick<InitialValuesListProductsInterface, "redeem_mode" | "redeem_time">;
+export interface GetRedeemPointsInterface extends CutInitialValuesListProductsInterface {
   id: string;
   points: number;
   status: PendindgOrApproveStatusType;

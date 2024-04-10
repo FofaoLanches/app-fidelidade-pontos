@@ -2,50 +2,51 @@
 import { useFormik } from "formik";
 import { isEmpty, truncate } from "lodash";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 
-import { Button } from "@/components";
+import { Button, RedeemProductsModal } from "@/components";
 import { useCustomer } from "@/hooks";
 import { GotchedPointClientPageInterface, InitialValuesListProductsInterface } from "@/types";
+import { RedeemPointsSchema } from "@/yupConfigs";
 
 export const ClientPage: React.FC<GotchedPointClientPageInterface> = (props) => {
   const { products, token } = props;
   const { onRedeemPoint } = useCustomer();
   const navigate = useRouter();
 
+  const [isOpenRedeemModal, setIsOpenRedeemModal] = useState<boolean>(false);
+
   const initialValues: InitialValuesListProductsInterface = {
-    checkedProducts: [],
+    redeem_mode: "TAKEAWAY",
+    redeem_time: "",
+    product_ids: [],
   };
 
-  const handleRedeemPoints = async (values: InitialValuesListProductsInterface) => {
-    const promise = onRedeemPoint({ value: values.checkedProducts, token });
+  const handleModal = () => setIsOpenRedeemModal((s) => !s);
 
-    const res = await toast.promise(
-      promise,
-      {
-        loading: "Processando...",
-        error: "Ocorreu um problema ao resgatar!",
-        success: "Resgate de pontos efetuado com sucesso!",
-      },
-      {
-        success: {
-          duration: 5000,
-        },
-      },
-    );
+  const handleRedeemPoints = async (dataValues: InitialValuesListProductsInterface) => {
+    const { product_ids, redeem_mode, redeem_time } = dataValues;
+    const res = await onRedeemPoint({ product_ids, redeem_mode, redeem_time, token });
 
     if (res.success === false) {
-      return;
-    } else {
-      navigate.push("/p/dashboard");
+      return toast.error(`${res.message}`);
     }
+
+    handleModal();
+    toast.success("Resgate de pontos efetuado com sucesso!", {
+      duration: 5000,
+    });
+    return navigate.push("/p/dashboard");
   };
 
-  const { values, isSubmitting, handleSubmit, handleChange } = useFormik<InitialValuesListProductsInterface>({
-    initialValues,
-    onSubmit: (values) => handleRedeemPoints(values),
-  });
+  const { values, errors, touched, isSubmitting, handleSubmit, handleChange, handleBlur, setFieldValue } =
+    useFormik<InitialValuesListProductsInterface>({
+      initialValues,
+      validationSchema: RedeemPointsSchema,
+      onSubmit: (values) => handleRedeemPoints(values),
+    });
 
   if (isEmpty(products)) {
     return (
@@ -61,10 +62,28 @@ export const ClientPage: React.FC<GotchedPointClientPageInterface> = (props) => 
     <div className="relative w-full pb-[20%] px-[5%]">
       <span className="text-fontsColor-800 font-medium">Resgate seus pontos:</span>
       <form className="mt-2">
+        <RedeemProductsModal
+          isOpen={isOpenRedeemModal}
+          onClose={handleModal}
+          inputsValues={{
+            errorMessageMode: errors.redeem_mode,
+            errorMessageTime: errors.redeem_time,
+            isInvalidMode: !!errors.redeem_mode && touched.redeem_mode,
+            isInvalidTime: !!errors.redeem_time && touched.redeem_time,
+            setFieldValue,
+            isSubmitting,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            valueMode: values.redeem_mode,
+            valueTime: values.redeem_time,
+          }}
+        />
+
         <ul className="overflow-y-auto lg:overflow-y-scroll h-full space-y-4 max-h-[80vh] lg:max-h-[35vh] lg:pr-2 hide-scrollbar">
           {products.map((product) => {
             let { amount_points, description = "...", display_name, id, image_url = "" } = product;
-            const isChecked = values.checkedProducts.includes(id);
+            const isChecked = values.product_ids.includes(id);
 
             return (
               <li
@@ -80,7 +99,7 @@ export const ClientPage: React.FC<GotchedPointClientPageInterface> = (props) => 
                     )}
                   >
                     <div className="absolute top-1 right-2">
-                      <input className="cursor-pointer" type="checkbox" id={id} name="checkedProducts" value={id} onChange={handleChange} />
+                      <input className="cursor-pointer" type="checkbox" id={id} name="product_ids" value={id} onChange={handleChange} />
                       <span className="pl-2">{amount_points} pts</span>
                     </div>
                     <div className="flex gap-4">
@@ -104,11 +123,11 @@ export const ClientPage: React.FC<GotchedPointClientPageInterface> = (props) => 
           })}
         </ul>
       </form>
-      {!isEmpty(values.checkedProducts) && (
+      {!isEmpty(values.product_ids) && (
         <Button
           variant="button"
-          className="absolute text-fontsColor-200 bottom-0 max-w-[90%]"
-          onClick={() => handleSubmit()}
+          className="absolute text-fontsColor-200 bottom-0 max-w-[90%] md:bottom-24"
+          onClick={handleModal}
           isLoading={isSubmitting}
         >
           Resgatar

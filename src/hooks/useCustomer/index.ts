@@ -32,9 +32,14 @@ export function useCustomer() {
   };
 
   const onRedeemPoint = async (value: RedeemPointPostRequestInterface): Promise<ErrorResponseEndpointInterface> => {
+    const { token, ...rest } = value;
+
     const req = await fetch("/api/redeem-points", {
       method: "POST",
-      body: JSON.stringify(value),
+      headers: {
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(rest),
     });
 
     const res = await req.json();
