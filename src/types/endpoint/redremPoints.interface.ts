@@ -15,7 +15,7 @@ interface Customer {
 }
 
 type CutInitialValuesListProductsInterface = Pick<InitialValuesListProductsInterface, "redeem_mode" | "redeem_time">;
-export interface GetRedeemPointsInterface extends CutInitialValuesListProductsInterface {
+export interface GetRedeemPointsInterface extends Partial<CutInitialValuesListProductsInterface> {
   id: string;
   points: number;
   status: PendindgOrApproveStatusType;
