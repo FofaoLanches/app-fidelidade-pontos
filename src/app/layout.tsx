@@ -5,7 +5,6 @@ import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
 import { Screen } from "@/components";
-import { QrCodeProvider } from "@/context/qrcode-context";
 import SessionAuthenticateProvider from "@/context/sessionProvider";
 import { NextLayoutComponentInterface } from "@/types";
 
@@ -22,9 +21,7 @@ export default function RootLayout({ children, session }: NextLayoutComponentInt
       <body suppressHydrationWarning={true} className={inter.className}>
         <Toaster position="top-right" reverseOrder={false} />
         <SessionAuthenticateProvider session={session}>
-          <QrCodeProvider>
-            <Screen>{children}</Screen>
-          </QrCodeProvider>
+          <Screen>{children}</Screen>
         </SessionAuthenticateProvider>
       </body>
     </html>

@@ -34,3 +34,16 @@ export const formatCurrencyInput = (event: React.ChangeEvent<HTMLInputElement | 
 
   return valueAux;
 };
+
+export const formatTime = (time: string): string | null => {
+  const regex = /^(\d{2})(\d{2})$/;
+  const match = time.match(regex);
+
+  if (match) {
+    const horaFormatada = `${match[1]}:${match[2]}`;
+
+    return horaFormatada;
+  } else {
+    return time;
+  }
+};

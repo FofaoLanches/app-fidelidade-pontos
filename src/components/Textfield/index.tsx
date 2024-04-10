@@ -36,7 +36,7 @@ export const Textfield: React.FC<TextFieldInterface> = (props) => {
         name={id}
         maxLength={maxLength}
         className={twMerge(
-          "w-full h-[40px] bg-white rounded text-fontsColor-900 px-4 focus:outline-none focus:ring focus:ring-ternary-100",
+          "w-full h-[40px] bg-white rounded text-fontsColor-900 px-4 border focus:outline-none focus:ring focus:ring-ternary-100",
           isInvalid && "style-focus-error",
         )}
         placeholder={placeholder}

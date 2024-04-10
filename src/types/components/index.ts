@@ -8,7 +8,7 @@ export * from "./genericModal.interface";
 export * from "./header.interface";
 export * from "./list.interface";
 export * from "./notFound.interface";
-export * from "./qrCodeModal.interface";
+export * from "./redeemProductsModal.interface";
 export * from "./textfield.interface";
 export * from "./toast.interface";
 export * from "./verificationModal.interface";

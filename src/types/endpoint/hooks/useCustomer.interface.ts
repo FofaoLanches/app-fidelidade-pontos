@@ -1,4 +1,4 @@
-import { TokenProp, UserType } from "@/types";
+import { InitialValuesListProductsInterface, TokenProp, UserType } from "@/types";
 
 export interface GetCustomerInterface {
   id: string;
@@ -8,9 +8,7 @@ export interface GetCustomerInterface {
   user: UserType;
 }
 
-export interface RedeemPointPostRequestInterface extends TokenProp {
-  value: string[];
-}
+export interface RedeemPointPostRequestInterface extends InitialValuesListProductsInterface, TokenProp {}
 
 export interface SendPhoneVerificationCodeRequestInterface {
   phone_number: string;

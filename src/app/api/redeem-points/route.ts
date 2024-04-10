@@ -25,17 +25,21 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const data = await request.json();
+  const token = headers().get("authorization");
 
   const req = await fetch(`${getEndpointBaseUrlAPIS()}/customer/redeem-points/products`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${data.token}`,
+      Authorization: `Bearer ${token}`,
       "Content-type": "application/json",
     },
-    body: JSON.stringify({ product_ids: data.value }),
+    body: JSON.stringify(data),
   });
-
   const res: ErrorResponseEndpointInterface = await req.json();
+
+  if (req.status === 400) {
+    return NextResponse.json(res);
+  }
 
   if (res.success === false) {
     throw new Error("Error");

@@ -12,11 +12,16 @@ export const ListContentRedeemPointsRegistration: React.FC<ListContentRedeemPoin
     },
     quantity_of_products,
     products,
+    redeem_mode,
+    redeem_time = "13:00",
   } = props;
   const productsLength = products.length;
 
   return (
     <div className="flex flex-col w-full">
+      <b className="mb-4">
+        {redeem_mode === "DINE_IN" ? "Comer no local" : "Retirada"} às {redeem_time} hrs
+      </b>
       <p>Cliente: {full_name}</p>
       <p>Pedido com telefone: {formatPhone(phone_number)}</p>
 
