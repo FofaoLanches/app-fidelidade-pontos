@@ -91,7 +91,7 @@ export const RedeemProductsModal: React.FC<RedeemProductsModalInterface> = (prop
                     isLoading={isSubmitting}
                   />
                 </div>
-                <Button variant="button" onClick={() => handleSubmit()} className="text-white bg-ternary-400 px-2">
+                <Button variant="button" onClick={() => handleSubmit()} className="text-white bg-ternary-400 px-2" isLoading={isSubmitting}>
                   Fazer pedido
                 </Button>
               </Dialog.Panel>
