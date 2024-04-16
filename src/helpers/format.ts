@@ -39,11 +39,17 @@ export const formatTime = (time: string): string | null => {
   const regex = /^(\d{2})(\d{2})$/;
   const match = time.match(regex);
 
-  if (match) {
-    const horaFormatada = `${match[1]}:${match[2]}`;
+  const mask = /[^\d\s:]/g;
 
-    return horaFormatada;
+  if (mask.test(time)) {
+    return "";
   } else {
-    return time;
+    if (match) {
+      const horaFormatada = `${match[1]}:${match[2]}`;
+
+      return horaFormatada;
+    } else {
+      return time;
+    }
   }
 };

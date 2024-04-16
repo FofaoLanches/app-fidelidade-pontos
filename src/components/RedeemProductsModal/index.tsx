@@ -49,7 +49,7 @@ export const RedeemProductsModal: React.FC<RedeemProductsModalInterface> = (prop
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-4/6 rounded-2xl bg-white p-10 transition-all">
+              <Dialog.Panel className="w-5/6 rounded-2xl bg-white p-10 transition-all">
                 <Dialog.Title as="h3" className="text-center text-lg font-semibold leading-6 text-fontsColor-900 mb-4">
                   Informações do pedido:
                 </Dialog.Title>
