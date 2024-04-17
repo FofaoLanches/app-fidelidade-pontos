@@ -35,15 +35,17 @@ export const formatCurrencyInput = (event: React.ChangeEvent<HTMLInputElement | 
   return valueAux;
 };
 
-export const formatTime = (time: string): string | null => {
-  const regex = /^(\d{2})(\d{2})$/;
-  const match = time.match(regex);
+export const formatTime =(input: string) => {
+    const cleanedInput = input.replace(/[^\d]/g, '');
 
-  if (match) {
-    const horaFormatada = `${match[1]}:${match[2]}`;
+    let formattedHour = '';
 
-    return horaFormatada;
-  } else {
-    return time;
-  }
-};
+    for (let i = 0; i < cleanedInput.length; i++) {
+        if (i === 2) {
+            formattedHour += ':';
+        }
+        formattedHour += cleanedInput[i];
+    }
+
+    return formattedHour.substr(0, 5);
+}

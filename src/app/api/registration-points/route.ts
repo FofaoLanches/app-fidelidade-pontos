@@ -41,7 +41,7 @@ export async function POST(request: Request) {
   const res: ErrorResponseEndpointInterface = await req.json();
 
   if (req.status === 500) {
-    throw new Error("Error allan");
+    throw new Error("Error");
   }
 
   return NextResponse.json(res);
