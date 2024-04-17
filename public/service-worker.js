@@ -12,6 +12,7 @@ self.addEventListener("push", function (event) {
             self.registration.showNotification("Fofão Lanches - Pontos de Fidelidade", {
                 body: message,
                 icon: "/mascote_sem_fundo.png",
+                requireInteraction: true,
                 data: { url: redirectUrl }   
             }),
     );
