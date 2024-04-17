@@ -30,7 +30,7 @@ export function usePushNotifications() {
             })
         });
       };
-    });
+    }).catch((error) => console.log("Service Worker Error", error));
   }, [session.data?.user.id]);
 
     return {
