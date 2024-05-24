@@ -6,7 +6,7 @@ import { ErrorResponseEndpointInterface, SendPhoneVerificationCodeRequestInterfa
 export async function POST(request: Request) {
   const data: SendPhoneVerificationCodeRequestInterface = await request.json();
 
-  // add this to not send SMS (?devMode=true)
+  // add this to not send code (?devMode=true)
 
   const req = await fetch(`${getEndpointBaseUrlAPIS()}/user/send-phone-verification-code`, {
     method: "POST",

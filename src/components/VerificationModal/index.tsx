@@ -48,7 +48,7 @@ export const VerificationModal: React.FC<VerificationModalInterface> = (props) =
                   Verificação de conta
                 </Dialog.Title>
                 <Dialog.Description className="text-center text-sm text-fontsColor-700">
-                  {`Digite o código de verificação que foi enviado por SMS para o telefone ${formatPhone(phoneNumber)} `}
+                  {`Digite o código de verificação que foi enviado por Whatsapp para o telefone ${formatPhone(phoneNumber)} `}
                 </Dialog.Description>
                 <OTPField
                   state={otp}
