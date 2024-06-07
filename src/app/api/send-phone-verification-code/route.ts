@@ -6,9 +6,9 @@ import { ErrorResponseEndpointInterface, SendPhoneVerificationCodeRequestInterfa
 export async function POST(request: Request) {
   const data: SendPhoneVerificationCodeRequestInterface = await request.json();
 
-  // add this to not send code (?devMode=true)
+  const devMode = process.env.NODE_ENV === "development" ? "?devMode=true" : "";
 
-  const req = await fetch(`${getEndpointBaseUrlAPIS()}/user/send-phone-verification-code`, {
+  const req = await fetch(`${getEndpointBaseUrlAPIS()}/user/send-phone-verification-code${devMode}`, {
     method: "POST",
     headers: {
       "api-key": process.env.API_KEY,

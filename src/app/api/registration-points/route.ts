@@ -36,7 +36,6 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       value_spent: Number(data.value_spent.replace(",", ".")),
-      phone_number: data.phone_number.replace(/[^\w\s]/gi, "").replace(" ", ""),
     }),
   });
 

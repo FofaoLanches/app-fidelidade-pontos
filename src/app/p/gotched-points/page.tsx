@@ -47,7 +47,7 @@ export default async function Page() {
           {customer.amount_points > 0 ? "Seus Pontos" : "Você não possui pontos"}
         </h3>
         {customer.amount_points === 0 && (
-          <Link className="bg-ternary-900 p-2 rounded-md text-fontsColor-100 mb-6" href="/">
+          <Link className="bg-ternary-900 p-2 rounded-md text-fontsColor-100 mb-6" href="/p/register-points">
             Cadastrar agora
           </Link>
         )}
