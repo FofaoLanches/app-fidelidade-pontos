@@ -29,7 +29,7 @@ export const cusotmerDrawerItems: DrawerItemListType[] = [
     forceHardNavigation: true,
   },
   {
-    id: "/",
+    id: "/p/register-points",
     icon: <AiTwotoneStar />,
     content: "Cadastrar pontos",
     forceHardNavigation: true,

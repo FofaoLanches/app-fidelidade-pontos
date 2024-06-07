@@ -72,7 +72,7 @@ export const ClientPage = () => {
       } else {
         toast.success("Conta criada com sucesso, faça login para confirmar!");
         setVerificationModalOpen(false);
-        navigate.push("/login");
+        navigate.push("/");
       }
     }
   };
@@ -172,7 +172,7 @@ export const ClientPage = () => {
               <Button disabled={!values.terms[0]} variant="button" className="bg-ternary-800 text-fontsColor-200" isLoading={isSubmitting}>
                 Criar conta
               </Button>
-              <Button className="bg-gray-500 text-fontsColor-200" variant="link" href="/login">
+              <Button className="bg-gray-500 text-fontsColor-200" variant="link" href="/">
                 Fazer login
               </Button>
             </div>

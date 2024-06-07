@@ -11,5 +11,6 @@ declare module "next-auth" {
       token: string;
       city?: string;
     };
+    error?: string;
   }
 }

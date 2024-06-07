@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/",
   },
   callbacks: {
     async jwt(data) {
@@ -66,6 +66,7 @@ export const authOptions: NextAuthOptions = {
 
       return {
         ...session,
+        error: token.error,
         user: {
           full_name: token.full_name,
           email: token.email,
@@ -76,10 +77,6 @@ export const authOptions: NextAuthOptions = {
         },
       };
     },
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 24 * 60 * 60, //24 h
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development",

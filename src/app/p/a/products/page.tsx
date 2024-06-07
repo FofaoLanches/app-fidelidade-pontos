@@ -9,16 +9,20 @@ export default async function Page() {
   const session = await useServerSession();
 
   if (session.user?.token) {
-    const req = await fetch(`${getEndpointBaseUrlClient()}/api/products`, {
-      method: "GET",
-      headers: {
-        Authorization: `${session.user?.token}`,
-      },
-    });
+    try {
+      const req = await fetch(`${getEndpointBaseUrlClient()}/api/products`, {
+        method: "GET",
+        headers: {
+          Authorization: `${session.user?.token}`,
+        },
+      });
 
-    const res: GetProductsInterface[] = await req.json();
+      const res: GetProductsInterface[] = await req.json();
 
-    return <ClientPage products={res} token={session.user?.token} />;
+      return <ClientPage products={res} token={session.user?.token} />;
+    } catch (error) {
+      console.log("🚀 ~ Page ~ error:", error);
+    }
   }
 
   return <LoadingPage />;
