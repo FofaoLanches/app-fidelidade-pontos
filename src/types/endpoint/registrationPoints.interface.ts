@@ -8,6 +8,11 @@ export interface GetRegistrationPointsInterface {
   approved_at: string;
   created_at: string;
   customer_id: string;
+  customer: {
+    user: {
+      full_name: string | null;
+    };
+  };
 }
 
 export interface GetSearchRegistrationRequestInterface {

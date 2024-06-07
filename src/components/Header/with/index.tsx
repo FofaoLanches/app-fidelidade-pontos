@@ -1,7 +1,7 @@
 "use client";
 
-import { SessionContext } from "next-auth/react";
-import React, { Fragment, useContext, useState } from "react";
+import { useSession } from "next-auth/react";
+import React, { Fragment, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { twMerge } from "tailwind-merge";
@@ -13,15 +13,15 @@ import { DrawerMenu } from "./drawerMenu";
 export const With: React.FC<WithInterface> = (props) => {
   const { className } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const session = useContext(SessionContext);
+  const session = useSession();
 
   const handleTriggerModal = () => setIsOpen((s) => !s);
 
   let firstName = "",
     adminCity = "";
 
-  if (session?.status === "authenticated") {
-    [firstName] = session?.data.user.full_name.split(" ");
+  if (session?.data && session?.status === "authenticated") {
+    [firstName] = session?.data.user.full_name?.split(" ");
     adminCity = session?.data?.user?.city as string;
   }
 

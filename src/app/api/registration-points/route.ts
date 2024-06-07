@@ -25,16 +25,17 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const data = await request.json();
+  const token = headers().get("authorization");
 
   const req = await fetch(`${getEndpointBaseUrlAPIS()}/customer/registration-points-requests`, {
     method: "POST",
     headers: {
       "api-key": process.env.API_KEY,
       "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       value_spent: Number(data.value_spent.replace(",", ".")),
-      phone_number: data.phone_number.replace(/[^\w\s]/gi, "").replace(" ", ""),
     }),
   });
 

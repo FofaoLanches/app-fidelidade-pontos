@@ -61,7 +61,7 @@ export const DrawerMenu: React.FC<DrawerMenuInterface> = (props) => {
     const response = await signOut({ redirect: false });
 
     if (response.url !== undefined) {
-      push("/login");
+      push("/");
     }
   };
 

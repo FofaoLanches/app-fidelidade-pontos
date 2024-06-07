@@ -1,24 +1,17 @@
-import { getEndpointBaseUrlClient } from "@/helpers";
+import { redirect } from "next/navigation";
+
 import { useServerSession } from "@/hooks";
-import { GetCustomerInterface } from "@/types";
 
 import { ClientPage } from "./clientPage";
 
-export default async function Page() {
+export default async function LoginPage() {
   const session = await useServerSession();
 
-  let customer = {} as GetCustomerInterface;
-
-  if (session.user?.token) {
-    const req = await fetch(`${getEndpointBaseUrlClient()}/api/customer?customer_id=${session.user?.id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `${session.user?.token}`,
-      },
-    });
-
-    customer = await req.json();
+  if (session.user?.role === "ADMIN") {
+    return redirect("/p/a/registration-points-req");
+  } else if (session.user?.role === "CUSTOMER") {
+    return redirect("/p/dashboard");
   }
 
-  return <ClientPage session={session} customer={customer} />;
+  return <ClientPage />;
 }
