@@ -48,9 +48,14 @@ export function useCustomer() {
   };
 
   const onRegistrationPoint = async (value: RegisterPointsInitialValuesInterface): Promise<ErrorResponseEndpointInterface> => {
+    const { token, ...rest } = value;
+
     const req = await fetch("/api/registration-points", {
       method: "POST",
-      body: JSON.stringify(value),
+      headers: {
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(rest),
     });
 
     const res = await req.json();

@@ -8,7 +8,7 @@ const middleware = (request: NextRequestWithAuth) => {
   requestHeaders.set("x-url", request.url);
 
   const allowedForAuthenticatedUsers = request.nextUrl.pathname.startsWith("/p");
-  const allowedForAdmin = request.nextUrl.pathname.startsWith("/p/a");
+  const notAllowedForCustomer = request.nextUrl.pathname.startsWith("/p/a");
   const notAllowedForAdmin = collaboratorPages
     .map((path) => {
       return request.nextUrl.pathname.startsWith(path);
@@ -17,13 +17,13 @@ const middleware = (request: NextRequestWithAuth) => {
 
   const isAdmin = request.nextauth.token?.role === "ADMIN";
 
-  if (isAdmin && allowedForAuthenticatedUsers) {
-    if (notAllowedForAdmin) {
+  if (allowedForAuthenticatedUsers) {
+    if (isAdmin && notAllowedForAdmin) {
       return NextResponse.rewrite(new URL("/p/a/registration-points-req", request.url));
     }
 
-    if (allowedForAdmin) {
-      return NextResponse.next();
+    if (!isAdmin && notAllowedForCustomer) {
+      return NextResponse.rewrite(new URL("/p/dashboard", request.url));
     }
   }
 

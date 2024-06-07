@@ -8,26 +8,25 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { twMerge } from "tailwind-merge";
 
 import { Button, Container, Header, Textfield } from "@/components";
-import { formatCurrencyInput, formatPhone } from "@/helpers";
+import { formatCurrencyInput } from "@/helpers";
 import { useCustomer } from "@/hooks";
 import { RegisterPointsInitialValuesInterface, RegisterPointsInterface } from "@/types";
 import { PointsRegistrationSchema } from "@/yupConfigs";
 
 export const ClientPage: React.FC<RegisterPointsInterface> = (props) => {
-  const { customer, session } = props;
+  const { session } = props;
   const { onRegistrationPoint } = useCustomer();
   const navigate = useRouter();
   const hasSession = !isEmpty(session?.user);
 
   const initialValues: RegisterPointsInitialValuesInterface = {
-    phone_number: formatPhone(`${customer?.phone_number}`),
     value_spent: "",
+    token: session.user?.token!,
   };
 
   const handleRegistrationPoint = async (values: RegisterPointsInitialValuesInterface) => {
     const formattedValues: RegisterPointsInitialValuesInterface = {
       ...values,
-      phone_number: values.phone_number.replace(/\D/g, ""),
     };
 
     const res = await onRegistrationPoint(formattedValues);
@@ -48,7 +47,7 @@ export const ClientPage: React.FC<RegisterPointsInterface> = (props) => {
       });
     }
 
-    toast.success(`Solicitação de valor R$ ${values.value_spent} enviado pelo número ${values.phone_number}`, {
+    toast.success(`Solicitação de valor R$ ${values.value_spent} enviado!`, {
       duration: 5000,
       icon: <BsFillCheckCircleFill className="text-ternary-800 w-10 h-10" />,
       style: {
@@ -96,20 +95,6 @@ export const ClientPage: React.FC<RegisterPointsInterface> = (props) => {
           >
             {({ errors, touched, values, handleBlur, setFieldValue, isSubmitting }) => (
               <Form className="w-full">
-                <div className={`${hasSession ? "hidden" : "visible"}`}>
-                  <Textfield
-                    id="phone_number"
-                    message={errors.phone_number}
-                    placeholder="Telefone"
-                    label="Digite seu telefone"
-                    value={values.phone_number}
-                    onChange={(e) => setFieldValue("phone_number", formatPhone(e.target.value))}
-                    onBlur={handleBlur("phone_number")}
-                    isInvalid={!!errors.phone_number && touched.phone_number}
-                    maxLength={15}
-                  />
-                </div>
-
                 <Textfield
                   id="value_spent"
                   prefix="R$"

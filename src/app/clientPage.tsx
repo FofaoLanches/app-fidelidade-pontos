@@ -46,7 +46,7 @@ export const ClientPage = () => {
           validateOnBlur={true}
           validateOnChange={false}
         >
-          {({ errors, touched, values, handleBlur, handleChange, isSubmitting }) => {
+          {({ errors, touched, values, handleBlur, handleChange, isSubmitting, handleSubmit }) => {
             return (
               <Form className="w-full">
                 <Textfield
@@ -74,7 +74,15 @@ export const ClientPage = () => {
 
                 <div className="flex flex-col gap-4 divide-y-2 divide-ternary-400">
                   <div className="flex flex-col gap-4">
-                    <Button variant="button" className="bg-ternary-800 text-fontsColor-200" isLoading={isSubmitting}>
+                    <Button
+                      variant="button"
+                      onClick={() => {
+                        handleSubmit();
+                      }}
+                      hasType={false}
+                      className="bg-ternary-800 text-fontsColor-200"
+                      isLoading={isSubmitting}
+                    >
                       Entrar
                     </Button>
 
