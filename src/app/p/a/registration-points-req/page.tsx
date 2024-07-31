@@ -10,17 +10,22 @@ import { ClientPage } from "./clientPage";
 export default async function Page() {
   const session = await useServerSession();
 
-  const req = await fetch(`${getEndpointBaseUrlClient()}/api/registration-points`, {
-    method: "GET",
-    headers: {
-      Authorization: `${session.user?.token}`,
-    },
-  });
+  try {
+    const req = await fetch(`${getEndpointBaseUrlClient()}/api/registration-points`, {
+      method: "GET",
+      headers: {
+        Authorization: `${session.user?.token}`,
+      },
+    });
 
-  const registrations: GetRegistrationPointsInterface[] = await req.json();
+    const registrations: GetRegistrationPointsInterface[] = await req.json();
 
-  if (!isEmpty(registrations)) {
-    return <ClientPage registrations={registrations} token={session.user?.token} />;
+    if (!isEmpty(registrations)) {
+      return <ClientPage registrations={registrations} token={session.user?.token} />;
+    }
+  } catch (error) {
+    console.log(error);
   }
+
   return <NotFound content="Não há cadastros neste momento!" />;
 }

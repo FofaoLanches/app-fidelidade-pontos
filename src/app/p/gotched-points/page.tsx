@@ -14,24 +14,28 @@ export default async function Page() {
   let products = [] as GetProductsInterface[];
 
   if (session.user?.token) {
-    const req_customer = fetch(`${getEndpointBaseUrlClient()}/api/customer?customer_id=${session.user?.id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `${session.user?.token}`,
-      },
-    });
-    const req_products = fetch(`${getEndpointBaseUrlClient()}/api/products`, {
-      method: "GET",
-      headers: {
-        Authorization: `${session.user?.token}`,
-      },
-    });
+    try {
+      const req_customer = fetch(`${getEndpointBaseUrlClient()}/api/customer?customer_id=${session.user?.id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `${session.user?.token}`,
+        },
+      });
+      const req_products = fetch(`${getEndpointBaseUrlClient()}/api/products`, {
+        method: "GET",
+        headers: {
+          Authorization: `${session.user?.token}`,
+        },
+      });
 
-    const requests = await Promise.all([req_customer, req_products]);
-    const responses = await Promise.all(requests.map(async (a) => await a.json()));
+      const requests = await Promise.all([req_customer, req_products]);
+      const responses = await Promise.all(requests.map(async (a) => await a.json()));
 
-    customer = responses[0];
-    products = responses[1];
+      customer = responses[0];
+      products = responses[1];
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
